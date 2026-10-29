@@ -1,0 +1,35 @@
+/* Shop card delete button */
+.btn-delete-shop {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.shop-card:hover .btn-delete-shop {
+  opacity: 1;
+}
+
+.btn-delete-shop:hover {
+  background: rgba(220, 38, 38, 1);
+}
+
+.btn-delete-shop:active {
+  transform: scale(0.95);
+}
+
+/* Make shop card position relative for absolute button positioning */
+.shop-card {
+  position: relative;
+}

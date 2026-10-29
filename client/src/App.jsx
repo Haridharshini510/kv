@@ -3,6 +3,7 @@ import LoginScreen from './components/LoginScreen';
 import MainPage from './pages/MainPage';
 import './index.css';
 import './styles/overlays.css';
+import './styles/shop-card.css';
 
 function App() {
   const { isAuthenticated, login } = useAuth();

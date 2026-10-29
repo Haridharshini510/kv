@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Store, Plus, Trash2 } from 'lucide-react';
 import { api } from '../services/api';
 import VoiceOverlay from '../components/VoiceOverlay';
 import BillOverlay from '../components/BillOverlay';
@@ -100,6 +101,22 @@ export default function MainPage() {
     setCreateShopModal(false);
   }
 
+  async function handleDeleteShop(shopId, shopName, event) {
+    event.stopPropagation(); // Prevent card click
+
+    if (!window.confirm(`Are you sure you want to delete "${shopName}"?\n\nThis action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      await api.deleteShop(shopId);
+      loadShops();
+      loadTodaySummary();
+    } catch (err) {
+      alert('Failed to delete shop: ' + err.message);
+    }
+  }
+
   if (loading) {
     return (
       <div className="main-page">
@@ -116,14 +133,15 @@ export default function MainPage() {
       {/* Header */}
       <header className="main-header">
         <div className="header-left">
-          <div className="kv-logo">🎤 KV</div>
+          <div className="kv-logo">KV</div>
           <div className="logo-subtitle">KadaiVoice</div>
         </div>
         <button
           className="btn btn-create-shop"
           onClick={handleCreateShop}
         >
-          + Create Shop
+          <Plus size={20} />
+          Create Shop
         </button>
       </header>
 
@@ -135,14 +153,14 @@ export default function MainPage() {
 
         {shops.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">🏪</div>
             <h3>No shops yet</h3>
             <p>Create your first shop to get started</p>
             <button
               className="btn btn-primary btn-large"
               onClick={handleCreateShop}
             >
-              + Create Shop
+              <Plus size={20} />
+              Create Shop
             </button>
           </div>
         ) : (
@@ -156,7 +174,16 @@ export default function MainPage() {
                   className="shop-card"
                   onClick={() => handleShopClick(shop)}
                 >
-                  <div className="shop-card-icon">🏪</div>
+                  <button
+                    className="btn-delete-shop"
+                    onClick={(e) => handleDeleteShop(shop.id, shop.name, e)}
+                    title="Delete shop"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                  <div className="shop-card-icon">
+                    <Store size={32} />
+                  </div>
                   <h3 className="shop-card-name">{shop.name}</h3>
                   <div className="shop-card-stats">
                     <div className="shop-stat">
@@ -167,22 +194,12 @@ export default function MainPage() {
                       ₹{summary.total.toFixed(2)}
                     </div>
                   </div>
-                  <div className="shop-card-hint">
-                    <span className="hint-small">Tap once: Voice • Tap twice: Bill</span>
-                  </div>
                 </div>
               );
             })}
           </div>
         )}
       </main>
-
-      {/* Footer hint */}
-      <footer className="main-footer">
-        <p className="footer-hint">
-          💡 Single tap to add entry • Double tap to view bill
-        </p>
-      </footer>
 
       {/* Voice Overlay */}
       {voiceOverlay.open && (

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FileText, X, Printer, Download, Share2, Phone, MapPin, Calendar } from 'lucide-react';
 import { api } from '../services/api';
 import { generatePDF } from '../services/pdfGenerator';
 import { shareViaWhatsApp } from '../services/whatsappShare';
@@ -102,8 +103,13 @@ export default function BillOverlay({ shop, onClose }) {
       <div className="overlay-content bill-overlay" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="overlay-header no-print">
-          <h2 className="overlay-title">📄 {shop.name} - Bill</h2>
-          <button className="btn-close" onClick={onClose}>✕</button>
+          <h2 className="overlay-title">
+            <FileText size={24} />
+            {shop.name} - Invoice
+          </h2>
+          <button className="btn-close" onClick={onClose}>
+            <X size={24} />
+          </button>
         </div>
 
         {/* Body */}
@@ -121,7 +127,6 @@ export default function BillOverlay({ shop, onClose }) {
 
           {!loading && !error && items.length === 0 && (
             <div className="empty-bill">
-              <div className="empty-icon">📋</div>
               <h3>No entries today</h3>
               <p>Add some entries first to generate a bill</p>
               <button className="btn btn-primary" onClick={onClose}>
@@ -137,13 +142,20 @@ export default function BillOverlay({ shop, onClose }) {
                 <h1 className="bill-title">INVOICE</h1>
                 <div className="bill-shop-name">{shop.name}</div>
                 {shop.phone && (
-                  <div className="bill-shop-detail">📱 {shop.phone}</div>
+                  <div className="bill-shop-detail">
+                    <Phone size={16} />
+                    {shop.phone}
+                  </div>
                 )}
                 {shop.address && (
-                  <div className="bill-shop-detail">📍 {shop.address}</div>
+                  <div className="bill-shop-detail">
+                    <MapPin size={16} />
+                    {shop.address}
+                  </div>
                 )}
                 <div className="bill-date">
-                  📅 {new Date().toLocaleDateString('en-IN', {
+                  <Calendar size={16} />
+                  {new Date().toLocaleDateString('en-IN', {
                     day: '2-digit',
                     month: 'long',
                     year: 'numeric'
@@ -202,7 +214,8 @@ export default function BillOverlay({ shop, onClose }) {
               className="btn btn-primary"
               onClick={handlePrint}
             >
-              🖨️ Print
+              <Printer size={20} />
+              Print
             </button>
 
             <button
@@ -210,14 +223,16 @@ export default function BillOverlay({ shop, onClose }) {
               onClick={handleDownloadPDF}
               disabled={generatingPDF}
             >
-              {generatingPDF ? 'Generating...' : '📥 PDF'}
+              <Download size={20} />
+              {generatingPDF ? 'Generating...' : 'Download PDF'}
             </button>
 
             <button
               className="btn btn-whatsapp"
               onClick={handleWhatsAppShare}
             >
-              📱 WhatsApp
+              <Share2 size={20} />
+              Share WhatsApp
             </button>
 
             <button

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Mic, X, StopCircle, RotateCcw, Check } from 'lucide-react';
 import { useSpeech } from '../hooks/useSpeech';
 import { parseVoiceEntry } from '../services/voiceParser';
 import { api } from '../services/api';
@@ -109,9 +110,12 @@ export default function VoiceOverlay({ shop, onClose, onComplete }) {
         {/* Header */}
         <div className="overlay-header">
           <h2 className="overlay-title">
-            🎤 {shop.name}
+            <Mic size={24} />
+            Voice Entry - {shop.name}
           </h2>
-          <button className="btn-close" onClick={handleCancel}>✕</button>
+          <button className="btn-close" onClick={handleCancel}>
+            <X size={24} />
+          </button>
         </div>
 
         {/* Body */}
@@ -123,7 +127,9 @@ export default function VoiceOverlay({ shop, onClose, onComplete }) {
                   <div className="pulse-ring"></div>
                   <div className="pulse-ring pulse-delay-1"></div>
                   <div className="pulse-ring pulse-delay-2"></div>
-                  <div className="mic-icon-large">🎤</div>
+                  <div className="mic-icon-large">
+                    <Mic size={48} />
+                  </div>
                 </div>
               )}
 
@@ -153,7 +159,8 @@ export default function VoiceOverlay({ shop, onClose, onComplete }) {
               <div className="voice-actions">
                 {state === 'listening' && (
                   <button className="btn btn-danger btn-large" onClick={stopListening}>
-                    🔴 Stop
+                    <StopCircle size={20} />
+                    Stop Recording
                   </button>
                 )}
                 <button className="btn btn-secondary btn-large" onClick={handleCancel}>
@@ -247,11 +254,13 @@ export default function VoiceOverlay({ shop, onClose, onComplete }) {
                   onClick={handleConfirm}
                   disabled={!canConfirm}
                 >
-                  ✅ Confirm & Save
+                  <Check size={20} />
+                  Confirm & Save
                 </button>
                 {!manualMode && (
                   <button className="btn btn-secondary btn-large" onClick={handleRetry}>
-                    🔄 Try Again
+                    <RotateCcw size={20} />
+                    Try Again
                   </button>
                 )}
                 <button className="btn btn-secondary btn-large" onClick={handleCancel}>

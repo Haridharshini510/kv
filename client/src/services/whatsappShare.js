@@ -34,14 +34,14 @@ function formatInvoiceText(shop, date, items, total) {
   text += `*${shop.name}*\n`;
 
   if (shop.phone) {
-    text += `📱 ${shop.phone}\n`;
+    text += `Phone: ${shop.phone}\n`;
   }
 
   if (shop.address) {
-    text += `📍 ${shop.address}\n`;
+    text += `Address: ${shop.address}\n`;
   }
 
-  text += `📅 ${date}\n\n`;
+  text += `Date: ${date}\n\n`;
   text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
 
   // Items
@@ -52,7 +52,7 @@ function formatInvoiceText(shop, date, items, total) {
 
   text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
   text += `*Grand Total: ₹${total.toFixed(2)}*\n\n`;
-  text += `Thank you for your business! 🙏`;
+  text += `Thank you for your business!`;
 
   return text;
 }

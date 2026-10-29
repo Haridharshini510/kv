@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Store, X, Check } from 'lucide-react';
 import { api } from '../services/api';
 
 export default function CreateShopModal({ onClose, onShopCreated }) {
@@ -38,8 +39,13 @@ export default function CreateShopModal({ onClose, onShopCreated }) {
       <div className="overlay-content create-shop-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="overlay-header">
-          <h2 className="overlay-title">🏪 Create New Shop</h2>
-          <button className="btn-close" onClick={onClose}>✕</button>
+          <h2 className="overlay-title">
+            <Store size={24} />
+            Create New Shop
+          </h2>
+          <button className="btn-close" onClick={onClose}>
+            <X size={24} />
+          </button>
         </div>
 
         {/* Body */}
@@ -94,7 +100,8 @@ export default function CreateShopModal({ onClose, onShopCreated }) {
               className="btn btn-primary btn-large"
               disabled={saving || !name.trim()}
             >
-              {saving ? 'Creating...' : '✅ Create Shop'}
+              <Check size={20} />
+              {saving ? 'Creating...' : 'Create Shop'}
             </button>
             <button
               type="button"

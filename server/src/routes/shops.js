@@ -132,6 +132,24 @@ router.patch('/:id', async (req, res, next) => {
   }
 });
 
+// DELETE /api/v1/shops/:id - Delete a shop (soft delete by setting is_active = false)
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const result = await pool.query(
+      `UPDATE shops SET is_active = FALSE WHERE id = $1 RETURNING id, name, is_active`,
+      [req.params.id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Shop not found' });
+    }
+
+    res.json({ message: 'Shop deleted successfully', shop: result.rows[0] });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // GET /api/v1/shops/:id/prices - Get shop-specific prices
 router.get('/:id/prices', async (req, res, next) => {
   try {

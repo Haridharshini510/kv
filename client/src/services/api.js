@@ -42,6 +42,7 @@ export const api = {
   createShop: (shop) => request('/shops', { method: 'POST', body: JSON.stringify(shop) }),
   getShop: (id) => request(`/shops/${id}`),
   updateShop: (id, data) => request(`/shops/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+  deleteShop: (id) => request(`/shops/${id}`, { method: 'DELETE' }),
 
   getProducts: () => request('/products'),
   createProduct: (product) => request('/products', { method: 'POST', body: JSON.stringify(product) }),
